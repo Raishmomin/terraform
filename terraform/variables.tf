@@ -18,3 +18,12 @@ variable "key_name" {
 variable "private_key_path" {
   description = "Path to your private key (PEM file) on local system"
 }
+
+variable "ACCESS_KEY" {
+  type      = string
+  sensitive = true
+}
+variable "SECRET_ACCESS_KEY" {
+  type      = string
+  sensitive = true
+}

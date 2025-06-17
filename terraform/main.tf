@@ -1,27 +1,17 @@
 provider "aws" {
-  region = var.region
+  region     = var.region
+  access_key = var.ACCESS_KEY
+  secret_key = var.SECRET_ACCESS_KEY
 }
 
-resource "aws_instance" "web" {
-  ami           = var.ami
-  instance_type = var.instance_type
-  key_name      = var.key_name
-
-  user_data     = file("${path.module}/../scripts/install.sh")
-
+resource "aws_instance" "raish" {
+  ami                    = "ami-0f918f7e67a3323f0" # Ubuntu 22.04 LTS (for ap-south-1)
+  instance_type          = "t2.micro"
   vpc_security_group_ids = [aws_security_group.allow_ports.id]
-
+  key_name               = var.key_name
+  user_data              = file("install.sh")
   tags = {
-    Name = "flask-express-instance"
-  }
-
-  associate_public_ip_address = true
-
-  connection {
-    type        = "ssh"
-    user        = "ubuntu"
-    private_key = file(var.private_key_path)
-    host        = self.public_ip
+    Name = "Terraform-EC2"
   }
 }
 
